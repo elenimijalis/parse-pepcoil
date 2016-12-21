@@ -3,6 +3,16 @@ import sys
 import argparse
 import itertools
 
+def print_row(row):
+    order = [
+        'name', 'class', 'length', 'number',
+        'first_start', 'first_end', 'first_length',
+        'second_start', 'second_end', 'second_length',
+        'third_start', 'third_end', 'third_length',
+        'overall_coil_length', 'percentage'
+    ]
+    print '\t'.join([str(row[label]) for label in order])
+
 def parse_pepcoil(data):
     groups = []
     buff = []
@@ -54,6 +64,7 @@ def parse_pepcoil(data):
         row['number'] = num_coils
         row['overall_coil_length'] = overall_coil_length
         row['percentage'] = float(overall_coil_length)/float(length)*100
+        print_row(row)
         sys.exit()
 
 if __name__ == '__main__':
