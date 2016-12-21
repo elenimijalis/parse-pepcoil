@@ -25,7 +25,7 @@ def parse_pepcoil(data):
             buff += list(group)
     groups.append(buff)
 
-    row = {
+    row_template = {
         'name': '', 'class': '', 'length': '', 'number': '',
         'first_start': '', 'first_end': '', 'first_length': '',
         'second_start': '', 'second_end': '', 'second_length': '',
@@ -39,7 +39,8 @@ def parse_pepcoil(data):
         '3': 'third'
     }
 
-    for entry in groups:
+    for num, entry in enumerate(groups):
+        row = dict(row_template)
         length = 0
         num_coils = 0
         overall_coil_length = 0
