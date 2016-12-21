@@ -10,8 +10,7 @@ def parse_pepcoil(data):
         if key:
             if len(buff):
                 groups.append(buff)
-            buff = []
-            buff += list(group)
+            buff = list(group)
         else:
             buff += list(group)
     groups.append(buff)
