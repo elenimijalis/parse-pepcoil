@@ -24,17 +24,24 @@ def parse_pepcoil(data):
     }
 
     for entry in groups:
+        length = 0
+        num_coils = 0
         for line in entry:
+
             if line.strip().startswith('PEPCOIL'):
                 row['name'] = line.strip()[11:-4]
                 row['class'] = line.strip()[-3:]
             if line.strip().startswith('probable'):
-                pass
+                num_coils += 1
             if line.strip().startswith('Other'):
-                pass
+                tmp_length = int(line.strip()[22:].split()[2])
+                if tmp_length > length:
+                    length = tmp_length
 
-        print row
+        row['length'] = length
+        row['number'] = num_coils
         sys.exit()
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='outputs pepcoil data in tabular format')
     parser.add_argument('pepcoil_data', type=argparse.FileType("r"), help='pepcoil file')
