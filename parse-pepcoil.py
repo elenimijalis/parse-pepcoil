@@ -23,6 +23,12 @@ def parse_pepcoil(data):
         'overall_length': '', 'percentage': ''
     }
 
+    num_filter = {
+        '1': 'first',
+        '2': 'second',
+        '3': 'third'
+    }
+
     for entry in groups:
         length = 0
         num_coils = 0
@@ -33,6 +39,10 @@ def parse_pepcoil(data):
                 row['class'] = line.strip()[-3:]
             if line.strip().startswith('probable'):
                 num_coils += 1
+                coil = line.strip()[26:].replace('(', '').replace(')', '').split()
+                row[num_filter[str(num_coils)] + '_start'] = coil[0]
+                row[num_filter[str(num_coils)] + '_end'] = coil[2]
+                row[num_filter[str(num_coils)] + '_length'] = coil[3]
             if line.strip().startswith('Other'):
                 tmp_length = int(line.strip()[22:].split()[2])
                 if tmp_length > length:
