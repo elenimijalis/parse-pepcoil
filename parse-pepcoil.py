@@ -65,7 +65,6 @@ def parse_pepcoil(data):
         row['overall_coil_length'] = overall_coil_length
         row['percentage'] = float(overall_coil_length)/float(length)*100
         print_row(row)
-        sys.exit()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='outputs pepcoil data in tabular format')
