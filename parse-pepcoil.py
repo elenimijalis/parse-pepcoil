@@ -20,7 +20,7 @@ def parse_pepcoil(data):
         'first_start': '', 'first_end': '', 'first_length': '',
         'second_start': '', 'second_end': '', 'second_length': '',
         'third_start': '', 'third_end': '', 'third_length': '',
-        'overall_length': '', 'percentage': ''
+        'overall_coil_length': '', 'percentage': ''
     }
 
     num_filter = {
@@ -32,6 +32,7 @@ def parse_pepcoil(data):
     for entry in groups:
         length = 0
         num_coils = 0
+        overall_coil_length = 0
         for line in entry:
 
             if line.strip().startswith('PEPCOIL'):
@@ -40,6 +41,7 @@ def parse_pepcoil(data):
             if line.strip().startswith('probable'):
                 num_coils += 1
                 coil = line.strip()[26:].replace('(', '').replace(')', '').split()
+                overall_coil_length += int(coil[3])
                 row[num_filter[str(num_coils)] + '_start'] = coil[0]
                 row[num_filter[str(num_coils)] + '_end'] = coil[2]
                 row[num_filter[str(num_coils)] + '_length'] = coil[3]
@@ -50,6 +52,8 @@ def parse_pepcoil(data):
 
         row['length'] = length
         row['number'] = num_coils
+        row['overall_coil_length'] = overall_coil_length
+        row['percentage'] = float(overall_coil_length)/float(length)*100
         sys.exit()
 
 if __name__ == '__main__':
